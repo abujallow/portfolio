@@ -156,13 +156,17 @@ export default function Home() {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.8 }}
       >
-        <button className="bg-white text-black px-6 py-3 rounded-lg font-medium transition duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-          View Projects
-        </button>
+        <a href="#projects">
+  <button className="bg-white text-black px-6 py-3 rounded-lg font-medium transition duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
+    View Projects
+  </button>
+</a>
 
-        <button className="border border-white px-6 py-3 rounded-lg font-medium transition duration-300 hover:scale-105 hover:bg-white hover:text-black">
-          Contact
-        </button>
+        <a href="#contact">
+  <button className="border border-white px-6 py-3 rounded-lg font-medium transition duration-300 hover:scale-105 hover:bg-white hover:text-black">
+    Contact
+  </button>
+</a>
       </motion.div>
     </motion.div>
 
