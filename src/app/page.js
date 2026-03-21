@@ -1,37 +1,67 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import emailjs from "@emailjs/browser";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
 
 export default function Home() {
- const sendEmail = (e) => {
-  e.preventDefault();
 
-  emailjs.sendForm(
-    "service_rdf1y8z",
-    "template_2em9bla",
-    e.target,
-    "x3uO77Ckyycga9JaE"
-  )
-  .then(() => {
-    alert("Message sent successfully!");
-  }, (error) => {
-    alert("Failed to send message, try again.");
-    console.log(error);
-  });
+  // ✅ ADD THIS (typing logic)
+  const fullText =
+    "Think in systems. Act with precision. Build with intent. Deliver with impact.";
 
-  e.target.reset();
-};
- 
+  const [displayText, setDisplayText] = useState("");
+
+  useEffect(() => {
+    let i = 0;
+
+    const interval = setInterval(() => {
+      setDisplayText(fullText.slice(0, i));
+      i++;
+
+      if (i > fullText.length) {
+        clearInterval(interval);
+      }
+    }, 75);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // ✅ KEEP YOUR EMAIL FUNCTION
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    emailjs.sendForm(
+      "service_rdf1y8z",
+      "template_2em9bla",
+      e.target,
+      "x3uO77Ckyycga9JaE"
+    )
+    .then(() => {
+      alert("Message sent successfully!");
+    }, (error) => {
+      alert("Failed to send message, try again.");
+      console.log(error);
+    });
+
+    e.target.reset();
+  };
+
   return (
     <main className="bg-black text-white min-h-screen">
 
       {/* NAVBAR */}
 {/* NAVBAR */}
 <nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800">
-  <h1 className="text-xl font-bold">AJ.</h1>
+  <div className="flex items-center gap-8 flex-1">
+  <h1 className="text-xl font-bold whitespace-nowrap">AJ.</h1>
 
+  <p className="text-lg tracking-wider text-gray-300 hidden md:block mx-auto whitespace-nowrap">
+  {displayText}
+  <span className="animate-pulse">|</span>
+</p>
+</div>
   <div className="flex gap-6 text-gray-300">
     
     <button
@@ -214,26 +244,20 @@ export default function Home() {
             </h2>
 
             <p className="text-2xl md:text-3xl italic text-gray-300 leading-relaxed">
-              "I approach finance and data through the lens of risk, understanding
-              uncertainty, building systems that adapt, and making decisions that
-              create long-term impact."
+              "I approach finance and data through risk and uncertainty, building adaptive systems and leading to serve others through decisions that create long-term impact."
             </p>
           </div>
 
           {/* RIGHT */}
           <div>
             <p className="text-gray-400 leading-relaxed mb-6">
-              I’m currently a Finance and Data Science student focused on building
-              practical, data-driven systems within financial markets and operations.
-              My work sits at the intersection of analytics, backend systems, and
-              decision-making under uncertainty.
+              I’m currently a sophomore at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets and operations. My passion lies at the intersection of analytics, backend systems, and decision-making under uncertainty.
             </p>
 
             <p className="text-gray-400 leading-relaxed">
-              Beyond technical work, I value leadership and community engagement.
-              Through roles in organizations like RHA and NSBE, I’ve developed a
-              servant leadership approach centered on empowering others, building
-              strong teams, and creating meaningful impact on campus.
+              Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA) and President of the National Society of Black Engineers (NSBE), while also working as a Resident Assistant.
+
+Through these roles, I focus on empowering others, building strong communities, and creating environments where people can grow. My involvement reflects a broader commitment to leading with purpose, serving others while driving meaningful, lasting impact.
             </p>
           </div>
 
