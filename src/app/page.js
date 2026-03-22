@@ -165,21 +165,22 @@ export default function Home() {
   animate={{ opacity: 1, y: 0 }}
   transition={{ delay: 0.5, duration: 0.8 }}
 >
-  <TypeAnimation
-    sequence={[
-      "Finance",
-      1200,
-      "Data Science",
-      1200,
-      "Risk & Operations",
-      1200,
-      "Finance • Data Science • Risk & Operations",
-    ]}
-    wrapper="h2"
-    speed={60}
-    repeat={0} // 🚨 key: stops looping
-    className="text-xl md:text-2xl text-gray-400 mb-6"
-  />
+  <TypeAnimation 
+  sequence={[
+    "Finance",
+    1200,
+    "Data Science",
+    1200,
+    "Risk & Operations",
+    1200,
+    "Finance • Data Science • Risk & Operations",
+    2500, // pause longer on full identity
+  ]}
+  wrapper="h2"
+  speed={50}
+  repeat={Infinity} // ✅ loop forever
+  className="text-xl md:text-2xl text-gray-400 mb-6"
+/>
 </motion.div>
       <motion.p
         className="text-gray-300 text-lg leading-relaxed mb-8"
