@@ -123,9 +123,7 @@ export default function Home() {
       Contact
     </button>
     <a
-  href="https://onmyradar.lovestoblog.com/blog/blog"
-  target="_blank"
-  rel="noopener noreferrer"
+  href="/blog"
   className="flex items-center hover:text-white"
 >
   Blog
