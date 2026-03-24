@@ -122,7 +122,14 @@ export default function Home() {
     >
       Contact
     </button>
-
+    <a
+  href="https://onmyradar.lovestoblog.com/blog/blog"
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center hover:text-white"
+>
+  Blog
+</a>
     {/* ✅ ONLY ADD THIS PART */}
     <a
       href="/resume.pdf"
