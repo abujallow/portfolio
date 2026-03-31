@@ -2,10 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { TypeAnimation } from "react-type-animation";
+import Link from "next/link";
 
 export default function BlogPage() {
 
-  // ✅ ONE-TIME typing (navbar)
   const fullText =
     "Think in systems. Act with precision. Build with intent. Deliver with impact.";
 
@@ -31,20 +31,17 @@ export default function BlogPage() {
       {/* NAVBAR */}
       <nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800">
 
-        {/* LEFT */}
         <div className="flex items-center gap-8 flex-1">
           <a href="/" className="text-xl font-bold whitespace-nowrap">
             AJ.
           </a>
 
-          {/* ONE-TIME TYPING */}
           <p className="text-lg tracking-wider text-gray-300 hidden md:block mx-auto whitespace-nowrap">
             {displayText}
             <span className="animate-pulse">|</span>
           </p>
         </div>
 
-        {/* RIGHT */}
         <div className="flex items-center gap-6 text-gray-300">
           <a href="/" className="hover:text-white">Home</a>
           <a href="/#about" className="hover:text-white">About</a>
@@ -71,18 +68,13 @@ export default function BlogPage() {
         <div className="max-w-4xl mx-auto mb-20">
 
           <div className="flex items-center justify-center gap-4 mb-6">
-            <img
-              src="/omr-logo.png"
-              alt="OnMyRadar Logo"
-              className="w-20 h-20 object-contain"
-            />
+            <img src="/omr-logo.png" alt="OnMyRadar Logo" className="w-20 h-20 object-contain" />
 
             <h1 className="text-6xl font-bold tracking-tight text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.25)]">
               OnMyRadar
             </h1>
           </div>
 
-          {/* LOOPING BULLET ANIMATION */}
           <p className="text-gray-400 text-2xl text-center">
             <TypeAnimation
               sequence={[
@@ -108,72 +100,80 @@ export default function BlogPage() {
         <div className="max-w-4xl mx-auto space-y-12">
 
           {/* POST 1 */}
-          <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-red-500 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)]">
-            <div className="flex items-center gap-3 mb-2">
-              <img src="/omr-logo.png" className="w-8 h-8" />
-              <p className="text-sm text-gray-500">{"July 29, 2025"}</p>
+          <Link href="/blog/creator-crunch">
+            <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-red-500 hover:shadow-[0_0_30px_rgba(239,68,68,0.4)] cursor-pointer">
+              <div className="flex items-center gap-3 mb-2">
+                <img src="/omr-logo.png" className="w-8 h-8" />
+                <p className="text-sm text-gray-500">July 29, 2025</p>
+              </div>
+              <h2 className="text-2xl font-semibold mb-3 group-hover:text-red-400">
+                The Creator Crunch: Burnout, Budget Cuts, and the Battle for Relevance
+              </h2>
+              <p className="text-gray-400 mb-4">
+                The creator economy was sold as a path to independence. Mid-2025, the shine is wearing off.
+              </p>
+              <span className="text-sm group-hover:text-red-400">
+                Read More →
+              </span>
             </div>
-            <h2 className="text-2xl font-semibold mb-3 group-hover:text-red-400">
-              The Creator Crunch: Burnout, Budget Cuts, and the Battle for Relevance
-            </h2>
-            <p className="text-gray-400 mb-4">
-              The creator economy was sold as a path to independence. Mid-2025, the shine is wearing off.
-            </p>
-            <span className="text-sm group-hover:text-red-400">
-              Read More →
-            </span>
-          </div>
+          </Link>
 
           {/* POST 2 */}
-          <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(250,204,21,0.4)]">
-            <div className="flex items-center gap-3 mb-2">
-              <img src="/omr-logo.png" className="w-8 h-8" />
-              <p className="text-sm text-gray-500">{"July 17, 2025"}</p>
+          <Link href="/blog/bitcoin-120k">
+            <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(250,204,21,0.4)] cursor-pointer">
+              <div className="flex items-center gap-3 mb-2">
+                <img src="/omr-logo.png" className="w-8 h-8" />
+                <p className="text-sm text-gray-500">July 17, 2025</p>
+              </div>
+              <h2 className="text-2xl font-semibold mb-3 group-hover:text-yellow-300">
+                Bitcoin at $120K+: Policy, Politics, and Market Momentum
+              </h2>
+              <p className="text-gray-400 mb-4">
+                Bitcoin crossed a historic threshold, driven by policy and institutional momentum.
+              </p>
+              <span className="text-sm group-hover:text-yellow-300">
+                Read More →
+              </span>
             </div>
-            <h2 className="text-2xl font-semibold mb-3 group-hover:text-yellow-300">
-              Bitcoin at $120K+: Policy, Politics, and Market Momentum
-            </h2>
-            <p className="text-gray-400 mb-4">
-              Bitcoin crossed a historic threshold, driven by policy and institutional momentum.
-            </p>
-            <span className="text-sm group-hover:text-yellow-300">
-              Read More →
-            </span>
-          </div>
+          </Link>
 
           {/* POST 3 */}
-          <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)]">
-            <div className="flex items-center gap-3 mb-2">
-              <img src="/omr-logo.png" className="w-8 h-8" />
-              <p className="text-sm text-gray-500">{"July 7, 2025"}</p>
+          <Link href="/blog/tariff-tightrope">
+            <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-blue-500 hover:shadow-[0_0_30px_rgba(59,130,246,0.4)] cursor-pointer">
+              <div className="flex items-center gap-3 mb-2">
+                <img src="/omr-logo.png" className="w-8 h-8" />
+                <p className="text-sm text-gray-500">July 7, 2025</p>
+              </div>
+              <h2 className="text-2xl font-semibold mb-3 group-hover:text-blue-400">
+                The Tariff Tightrope: Deadlines, Deals, and What Comes Next
+              </h2>
+              <p className="text-gray-400 mb-4">
+                Trade policy is shifting fast, with tariffs becoming strategic tools.
+              </p>
+              <span className="text-sm group-hover:text-blue-400">
+                Read More →
+              </span>
             </div>
-            <h2 className="text-2xl font-semibold mb-3 group-hover:text-blue-400">
-              The Tariff Tightrope: Deadlines, Deals, and What Comes Next
-            </h2>
-            <p className="text-gray-400 mb-4">
-              Trade policy is shifting fast, with tariffs becoming strategic tools.
-            </p>
-            <span className="text-sm group-hover:text-blue-400">
-              Read More →
-            </span>
-          </div>
+          </Link>
 
           {/* POST 4 */}
-          <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)]">
-            <div className="flex items-center gap-3 mb-2">
-              <img src="/omr-logo.png" className="w-8 h-8" />
-              <p className="text-sm text-gray-500">{"July 1, 2025"}</p>
+          <Link href="/blog/welcome-omr">
+            <div className="group border border-gray-800 rounded-xl p-6 transition duration-300 hover:border-purple-500 hover:shadow-[0_0_30px_rgba(168,85,247,0.4)] cursor-pointer">
+              <div className="flex items-center gap-3 mb-2">
+                <img src="/omr-logo.png" className="w-8 h-8" />
+                <p className="text-sm text-gray-500">July 1, 2025</p>
+              </div>
+              <h2 className="text-2xl font-semibold mb-3 group-hover:text-purple-400">
+                Welcome to OnMyRadar: The Story Behind the Blog
+              </h2>
+              <p className="text-gray-400 mb-4">
+                The origin story behind the blog and its purpose.
+              </p>
+              <span className="text-sm group-hover:text-purple-400">
+                Read More →
+              </span>
             </div>
-            <h2 className="text-2xl font-semibold mb-3 group-hover:text-purple-400">
-              Welcome to OnMyRadar: The Story Behind the Blog
-            </h2>
-            <p className="text-gray-400 mb-4">
-              The origin story behind the blog and its purpose.
-            </p>
-            <span className="text-sm group-hover:text-purple-400">
-              Read More →
-            </span>
-          </div>
+          </Link>
 
         </div>
 
