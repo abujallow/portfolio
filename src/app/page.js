@@ -56,7 +56,7 @@ export default function Home() {
 
       {/* NAVBAR */}
 {/* NAVBAR */}
-<nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800">
+<nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800 bg-black text-white">
   <div className="flex items-center gap-8 flex-1">
   <h1 className="text-xl font-bold whitespace-nowrap">AJ.</h1>
 
