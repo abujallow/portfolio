@@ -9,6 +9,8 @@ const posts = {
   "creator-crunch": {
     title: "The Creator Crunch: Burnout, Budget Cuts, and the Battle for Relevance",
     date: "July 29, 2025",
+    image: "/creator-crunch.png",
+    gradient: "from-[#020617] via-[#0f172a] to-[#020617]",
     sections: [
       {
         heading: "The Promise vs. The Present",
@@ -77,6 +79,8 @@ Until next time, keep it on your radar.`,
   "bitcoin-120k": {
     title: "Bitcoin at $120K+: Policy, Politics, and Market Momentum",
     date: "July 17, 2025",
+    image: "/bitcoin.png",
+    gradient: "from-[#1a1409] via-[#3b2f1b] to-[#1a1409]",
     sections: [
       {
         heading: "A Breakout Moment",
@@ -144,6 +148,8 @@ Stay curious, pay attention, and keep it on your radar.`,
   "tariff-tightrope": {
   title: "Tariff Tightrope",
   date: "July 7, 2025",
+  image: "/tariff.png",
+  gradient: "from-[#1c140f] via-[#3b2a1f] to-[#1c140f]",
   sections: [
     {
       heading: "Brief recap (in case you didn’t get a chance)",
@@ -214,6 +220,8 @@ Until next time, stay curious, stay informed, and keep that on your radar.`,
 "welcome-omr": {
   title: "Welcome to OnMyRadar",
   date: "March 2025",
+  image: "/omr.png",
+  gradient: "from-white via-[#1e3a8a] to-[#9a3412]",
   sections: [
     {
       heading: "Before We Dive In",
@@ -303,7 +311,7 @@ const readingTime = Math.ceil(wordCount / 200);
       />
     </div>
 
-    <div className="min-h-screen bg-black text-white px-6 py-24">
+    <div className={`min-h-screen bg-gradient-to-b ${post.gradient || "from-black via-[#0f172a] to-black"} text-white px-6 py-24`}>
       <div className="max-w-3xl mx-auto">
 
         {/* 🔙 BACK TO BLOG */}
@@ -315,19 +323,28 @@ const readingTime = Math.ceil(wordCount / 200);
   </Link>
 
         {/* TITLE */}
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-blue-200 to-gray-500 bg-clip-text text-transparent">
-  {post.title}
+<h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-gray-900 via-blue-600 to-gray-800 bg-clip-text text-transparent">  {post.title}
 </h1>
 
         {/* DATE */}
         <p className="text-gray-500 mb-12">
   {post.date} • {readingTime} min read
 </p>
+{/* FEATURED IMAGE */}
+{post.image && (
+  <div className="mb-16 mt-6">
+    <img
+      src={post.image}
+      alt={post.title}
+      className="w-full max-w-4xl mx-auto h-auto rounded-2xl shadow-2xl border border-white/10 transition duration-300 hover:scale-[1.01]"
+    />
+  </div>
+)}
         {/* SECTIONS */}
         {post.sections.map((section, index) => (
           <div
   key={index}
-  className="mb-12 transition duration-300 hover:bg-white/3 hover:rounded-xl"
+  className="mb-12 transition duration-300 hover:bg-white/5 hover:rounded-xl"
 >
 
             {/* SECTION TITLE */}
