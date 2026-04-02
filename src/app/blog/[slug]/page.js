@@ -1,6 +1,9 @@
+"use client";
+import { useState, useEffect } from "react";
 import Link from "next/link";
-export default async function BlogPost({ params }) {
-  const { slug } = await params;
+import { useParams } from "next/navigation";
+export default function BlogPost({ params }) {
+  const { slug } = useParams();
 
 const posts = {
   "creator-crunch": {
@@ -255,6 +258,32 @@ Thanks again for being here. I’m proud of this start, and I’m even more exci
 };
 
   const post = posts[slug];
+  if (!post) return null;
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [showTop, setShowTop] = useState(false);
+
+useEffect(() => {
+  const handleScroll = () => {
+    const scrollTop = window.scrollY;
+    const docHeight =
+      document.documentElement.scrollHeight -
+      document.documentElement.clientHeight;
+
+    const progress = (scrollTop / docHeight) * 100;
+    setScrollProgress(progress);
+    setShowTop(scrollTop > 300);
+  };
+
+  window.addEventListener("scroll", handleScroll);
+
+  return () => window.removeEventListener("scroll", handleScroll);
+}, []);
+  const wordCount = post.sections
+  .map(section => section.text)
+  .join(" ")
+  .split(" ").length;
+
+const readingTime = Math.ceil(wordCount / 200);
 
   if (!post) {
     return (
@@ -265,6 +294,15 @@ Thanks again for being here. I’m proud of this start, and I’m even more exci
   }
 
   return (
+  <>
+    {/* PROGRESS BAR */}
+    <div className="fixed top-0 left-0 w-full h-1 z-50">
+      <div
+        className="h-full bg-gradient-to-r from-blue-400 to-purple-500 transition-all duration-150"
+        style={{ width: `${scrollProgress}%` }}
+      />
+    </div>
+
     <div className="min-h-screen bg-black text-white px-6 py-24">
       <div className="max-w-3xl mx-auto">
 
@@ -277,33 +315,52 @@ Thanks again for being here. I’m proud of this start, and I’m even more exci
   </Link>
 
         {/* TITLE */}
-        <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight">
-          {post.title}
-        </h1>
+        <h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-white via-blue-200 to-gray-500 bg-clip-text text-transparent">
+  {post.title}
+</h1>
 
         {/* DATE */}
         <p className="text-gray-500 mb-12">
-          {post.date}
-        </p>
-
+  {post.date} • {readingTime} min read
+</p>
         {/* SECTIONS */}
         {post.sections.map((section, index) => (
-          <div key={index} className="mb-12">
+          <div
+  key={index}
+  className="mb-12 transition duration-300 hover:bg-white/3 hover:rounded-xl"
+>
 
             {/* SECTION TITLE */}
-            <h2 className="text-2xl md:text-3xl font-semibold mb-4 text-white">
-              {section.heading}
-            </h2>
+            <div className="flex items-center gap-3 mb-4">
+  <div className="w-1 h-6 bg-gradient-to-b from-white to-gray-600 rounded-full"></div>
+
+  <h2 className="text-2xl md:text-3xl font-semibold text-white">
+    {section.heading}
+  </h2>
+</div>
 
             {/* SECTION TEXT */}
-            <p className="text-gray-300 leading-relaxed text-lg whitespace-pre-line">
-              {section.text}
-            </p>
+            <p className="text-gray-300 leading-loose text-lg whitespace-pre-line mb-4">
+  {section.text}
+</p>
 
           </div>
         ))}
 
+          
       </div>
     </div>
-  );
+
+    {/* BACK TO TOP BUTTON */}
+    {showTop && (
+      <button
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        className="fixed bottom-6 right-6 bg-white/10 hover:bg-white/20 text-white p-3 rounded-full backdrop-blur-md transition duration-300"
+      >
+        ↑
+      </button>
+    )}
+
+  </>
+);
 }
