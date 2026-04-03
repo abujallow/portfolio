@@ -221,7 +221,7 @@ Until next time, stay curious, stay informed, and keep that on your radar.`,
   title: "Welcome to OnMyRadar",
   date: "March 2025",
   image: "/omr.png",
-  gradient: "from-white via-[#1e3a8a] to-[#9a3412]",
+  gradient: "bg-gradient-to-b from-[#f8f5f0] via-[#f1ede6] to-[#e7e1d7]",
   sections: [
     {
       heading: "Before We Dive In",
@@ -323,11 +323,20 @@ const readingTime = Math.ceil(wordCount / 200);
   </Link>
 
         {/* TITLE */}
-<h1 className="text-5xl md:text-6xl font-bold mb-6 leading-tight bg-gradient-to-r from-gray-900 via-blue-600 to-gray-800 bg-clip-text text-transparent">  {post.title}
+<h1
+  className={`text-5xl md:text-6xl font-bold mb-6 leading-tight ${
+    slug === "welcome-omr" ? "text-gray-900" : "text-white"
+  }`}
+>
+  {post.title}
 </h1>
 
         {/* DATE */}
-        <p className="text-gray-500 mb-12">
+        <p
+  className={`mb-12 ${
+    slug === "welcome-omr" ? "text-gray-600" : "text-gray-500"
+  }`}
+>
   {post.date} • {readingTime} min read
 </p>
 {/* FEATURED IMAGE */}
@@ -351,13 +360,21 @@ const readingTime = Math.ceil(wordCount / 200);
             <div className="flex items-center gap-3 mb-4">
   <div className="w-1 h-6 bg-gradient-to-b from-white to-gray-600 rounded-full"></div>
 
-  <h2 className="text-2xl md:text-3xl font-semibold text-white">
+  <h2
+  className={`text-2xl md:text-3xl font-semibold ${
+    slug === "welcome-omr" ? "text-gray-900" : "text-white"
+  }`}
+>
     {section.heading}
   </h2>
 </div>
 
             {/* SECTION TEXT */}
-            <p className="text-gray-300 leading-loose text-lg whitespace-pre-line mb-4">
+            <p
+  className={`leading-loose text-lg whitespace-pre-line mb-4 ${
+    slug === "welcome-omr" ? "text-gray-700" : "text-gray-300"
+  }`}
+>
   {section.text}
 </p>
 
