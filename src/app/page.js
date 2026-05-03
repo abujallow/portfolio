@@ -258,7 +258,7 @@ export default function Home() {
       transition={{ duration: 0.8, delay: 0.4 }}
     >
       <img
-        src="/profile.png"
+        src="/Canisius_Headshots-155.jpg"
         alt="Profile"
         className="rounded-2xl w-80 object-cover shadow-[0_0_40px_rgba(255,255,255,0.1)]"
       />
