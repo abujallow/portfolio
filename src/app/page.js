@@ -386,12 +386,12 @@ export default function Home() {
 
         <div className="max-w-2xl">
           <h3 className="text-xl font-semibold transition duration-300 group-hover:text-green-400">
-            M&T Bank — Incoming Summer Analyst
+            M&T Bank — SPOC Summer Analyst
           </h3>
           <p className="text-gray-400 text-sm mb-4">Summer 2026</p>
 
           <ul className="text-gray-400 space-y-2 list-disc list-inside">
-            <li>Incoming analyst in Corporate Summer Internship Program (Mortgage Default Servicing – SPOC)</li>
+            <li>M&T Bank- Default Servicing and Single Point of Contact (SPOC)</li>
             <li>Focus on financial analysis, client engagement, and data-driven decision-making</li>
           </ul>
         </div>
@@ -409,7 +409,7 @@ export default function Home() {
 
         <div className="max-w-2xl">
           <h3 className="text-xl font-semibold transition duration-300 group-hover:text-blue-400">
-            City of Buffalo — Urban Fellows Intern
+            City of Buffalo — Risk Management Intern
           </h3>
           <p className="text-gray-400 text-sm mb-4">Summer 2025</p>
 
