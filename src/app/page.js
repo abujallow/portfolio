@@ -10,7 +10,59 @@ import { Shield, LineChart, Brain, Gauge, GitBranch, Target } from "lucide-react
 
 export default function Home() {
 
-  // ✅ ADD THIS (typing logic)
+  const [projectIndex, setProjectIndex] = useState(0);
+
+  const projects = [
+    {
+      title: "Credit Risk Mini-Model",
+      image: "/credit-risk.png",
+      featured: true,
+      tags: ["Python", "FastAPI", "Machine Learning"],
+      description: "Developed a logistic regression model to predict credit risk and deployed it with FastAPI to serve real-time predictions and support decision-making.",
+      github: "https://github.com/abujallow/credit-risk-mini",
+    },
+    {
+      title: "Risk Monitoring System",
+      image: "/risk-monitoring.png",
+      featured: false,
+      tags: ["Python", "Data Analysis"],
+      description: "Built a volatility monitoring system that tracks market conditions and triggers alerts based on predefined risk thresholds.",
+      github: "https://github.com/abujallow/risk-monitoring-system",
+    },
+    {
+      title: "Market Dashboard",
+      image: "/market-dashboard.png",
+      featured: false,
+      tags: ["Python", "Flask", "Data Visualization"],
+      description: "Built an interactive financial dashboard using Plotly and yFinance to visualize market trends and support data-driven investment insights.",
+      github: "https://github.com/abujallow/market-dashboard",
+    },
+    {
+      title: "Banking Logging System",
+      image: "/banking-logging.png",
+      featured: false,
+      tags: ["Java", "Logging", "File Handling"],
+      description: "Designed a Java-based application implementing structured logging, file handling, and configurable logging levels for transaction and system monitoring.",
+      github: "https://github.com/abujallow/banking-logging-java",
+    },
+    {
+      title: "Java Data Analyzer",
+      image: "/java-data-analyzer.png",
+      featured: false,
+      tags: ["Java", "JavaFX", "Statistics"],
+      description: "Built a JavaFX desktop application that processes numeric text files, calculates statistical metrics, and exports results using efficient file handling and backend logic.",
+      github: "https://github.com/abujallow/java-data-analyzer",
+    },
+    {
+      title: "Probability Simulation Engine",
+      image: "/probability-simulation.png",
+      featured: false,
+      tags: ["Java", "Simulation", "Probability"],
+      description: "Built a Java application that simulates randomized card hands, tracks unique combinations, measures coverage progress, and exports probability results for analysis.",
+      github: "https://github.com/abujallow/probability-simulation-engine",
+    },
+  ];
+
   const fullText =
     "Think in systems. Act with precision. Build with intent. Deliver with impact.";
 
@@ -31,7 +83,6 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
-  // ✅ KEEP YOUR EMAIL FUNCTION
   const sendEmail = (e) => {
     e.preventDefault();
 
@@ -53,7 +104,6 @@ export default function Home() {
 
   return (
     <main className="bg-black text-white min-h-screen">
-
       {/* NAVBAR */}
 {/* NAVBAR */}
 <nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800 bg-black text-white">
@@ -658,96 +708,96 @@ export default function Home() {
 >
   <div className="max-w-6xl mx-auto">
 
-    <h2 className="text-3xl font-bold mb-12 text-center">
-      Projects
-    </h2>
+    <h2 className="text-3xl font-bold mb-12 text-center">Projects</h2>
 
-    <div className="grid md:grid-cols-3 gap-8">
+    <div className="relative">
 
-      {/* PROJECT 1 */}
-<div className="group bg-gray-900 rounded-xl overflow-hidden transition duration-300 hover:scale-105 border border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.12)] scale-[1.02]">
-  <div className="overflow-hidden">
-    <img src="/credit-risk.png" alt="Credit Risk Model" className="w-full h-40 object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-90" />
-  </div>
+      {/* LEFT ARROW */}
+      <button
+        onClick={() => setProjectIndex((prev) => Math.max(prev - 1, 0))}
+        disabled={false}
+        className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-gray-800 border border-white/20 rounded-full p-2 hover:bg-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-  <div className="p-6">
+      {/* RIGHT ARROW */}
+      <button
+        onClick={() => setProjectIndex((prev) => (prev + 1) % Math.ceil(projects.length / 3))}
+        disabled={false}
+        className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-gray-800 border border-white/20 rounded-full p-2 hover:bg-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
 
-    <span className="text-xs text-green-400 border border-green-400/30 px-2 py-1 rounded-full mb-3 inline-block">
-      Featured
-    </span>
+      {/* CARDS */}
+      <div className="grid md:grid-cols-3 gap-8">
+        {projects.slice(projectIndex * 3, projectIndex * 3 + 3).map((project) => (
+          <div
+            key={project.title}
+            className={`group bg-gray-900 rounded-xl overflow-hidden transition duration-300 hover:scale-105 border ${
+              project.featured
+                ? "border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.12)] scale-[1.02]"
+                : "border-transparent hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]"
+            }`}
+          >
+            <div className="overflow-hidden">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-40 object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-90"
+              />
+            </div>
 
-    <h3 className="text-xl font-semibold mb-2">Credit Risk Mini-Model</h3>
+            <div className="p-6">
+              {project.featured && (
+                <span className="text-xs text-green-400 border border-green-400/30 px-2 py-1 rounded-full mb-3 inline-block">
+                  Featured
+                </span>
+              )}
 
-    <div className="flex gap-2 mb-3">
-      <span className="text-xs border border-white/20 px-2 py-1 rounded">Python</span>
-      <span className="text-xs border border-white/20 px-2 py-1 rounded">FastAPI</span>
-      <span className="text-xs border border-white/20 px-2 py-1 rounded">Machine Learning</span>
-    </div>
+              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
 
-    <p className="text-gray-400 text-sm mb-4">
-      Developed a logistic regression model to predict credit risk and deployed it with FastAPI to serve real-time predictions and support decision-making.
-    </p>
+              <div className="flex flex-wrap gap-2 mb-3">
+                {project.tags.map((tag) => (
+                  <span key={tag} className="text-xs border border-white/20 px-2 py-1 rounded">{tag}</span>
+                ))}
+              </div>
 
-    <a href="https://github.com/abujallow/credit-risk-mini" target="_blank" rel="noopener noreferrer" className="inline-block text-white border border-white px-4 py-2 rounded-md text-sm hover:bg-white hover:text-black">
-      GitHub
-    </a>
-  </div>
-</div>
-      {/* PROJECT 2 */}
-      <div className="group bg-gray-900 rounded-xl overflow-hidden transition duration-300 hover:scale-105 border border-transparent hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]">
-        <div className="overflow-hidden">
-          <img src="/risk-monitoring.png" alt="Risk Monitoring System" className="w-full h-40 object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-90" />
-        </div>
+              <p className="text-gray-400 text-sm mb-4">{project.description}</p>
 
-        <div className="p-6">
-          <h3 className="text-xl font-semibold mb-2">Risk Monitoring System</h3>
-
-          <div className="flex gap-2 mb-3">
-            <span className="text-xs border border-white/20 px-2 py-1 rounded">Python</span>
-            <span className="text-xs border border-white/20 px-2 py-1 rounded">Data Analysis</span>
+<a                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-block text-white border border-white px-4 py-2 rounded-md text-sm hover:bg-white hover:text-black transition"
+              >
+                GitHub
+              </a>
+            </div>
           </div>
-
-          <p className="text-gray-400 text-sm mb-4">
-            Built a volatility monitoring system that tracks market conditions and triggers alerts based on predefined risk thresholds.
-          </p>
-
-          <a href="https://github.com/abujallow/risk-monitoring-system" target="_blank" rel="noopener noreferrer" className="inline-block text-white border border-white px-4 py-2 rounded-md text-sm hover:bg-white hover:text-black">
-            GitHub
-          </a>
-        </div>
+        ))}
+      </div>
+ 
+      {/* DOT INDICATORS */}
+      <div className="flex justify-center gap-2 mt-8">
+        {Array.from({ length: Math.ceil(projects.length / 3) }).map((_, i) => (
+          <button
+            key={i}
+            onClick={() => setProjectIndex(i)}
+            className={`w-2 h-2 rounded-full transition ${
+              i === projectIndex ? "bg-white" : "bg-gray-600 hover:bg-gray-400"
+            }`}
+          />
+        ))}
       </div>
 
-      {/* PROJECT 3 ✅ NOW INSIDE GRID */}
-      <div className="group bg-gray-900 p-6 rounded-xl transition duration-300 hover:scale-105 border border-transparent hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]">
-
-        <div className="overflow-hidden mb-4 rounded-lg">
-          <img src="/market-dashboard.png" alt="Market Dashboard" className="w-full h-40 object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-90" />
-        </div>
-
-        <h3 className="text-xl font-semibold mb-2">
-          Market Dashboard
-        </h3>
-
-        <div className="flex gap-2 mb-3">
-          <span className="text-xs border border-white/20 px-2 py-1 rounded">Python</span>
-          <span className="text-xs border border-white/20 px-2 py-1 rounded">Flask</span>
-          <span className="text-xs border border-white/20 px-2 py-1 rounded">Data Visualization</span>
-        </div>
-
-        <p className="text-gray-400 text-sm mb-4">
-          Built an interactive financial dashboard using Plotly and yFinance to visualize market trends and support data-driven investment insights.
-        </p>
-
-        <a href="https://github.com/abujallow/market-dashboard" target="_blank" rel="noopener noreferrer" className="inline-block text-white border border-white px-4 py-2 rounded-md text-sm hover:bg-white hover:text-black">
-          GitHub
-        </a>
-      </div>
-
-    </div> {/* END GRID */}
-
-  </div> {/* END CONTAINER */}
-
-</motion.section> {/* ✅ THIS WAS MISSING */}
+    </div>
+  </div>
+</motion.section>
 
 <motion.section
   id="contact"
