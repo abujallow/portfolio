@@ -7,6 +7,7 @@ import { TypeAnimation } from "react-type-animation";
 import { Users, Briefcase, TrendingUp, Code } from "lucide-react";
 import CountUp from "react-countup";
 import { Shield, LineChart, Brain, Gauge, GitBranch, Target } from "lucide-react";
+import { DollarSign } from "lucide-react";
 
 export default function Home() {
 
@@ -392,11 +393,10 @@ export default function Home() {
     {/* RIGHT */}
     <div>
       <p className="text-gray-400 leading-relaxed mb-6">
-        I’m currently a sophomore at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets and operations. My passion lies at the intersection of analytics, backend systems, and decision-making under uncertainty.
-      </p>
+I’m a Junior at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets, operations, and risk management. My passion lies at the intersection of analytics, backend systems, operational and risk-based decision-making, and navigating uncertainty through data-driven insights.      </p>
 
       <p className="text-gray-400 leading-relaxed">
-        Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA) and President of the National Society of Black Engineers (NSBE), while also working as a Resident Assistant.
+        Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA), a position I have held for three years, and Executive Vice President of Alpha Kappa Psi, Delta Tau Chapter, while also working as a Resident Assistant and Teaching Assistant for both Microeconomics and Macroeconomics.
 
         <br /><br />
 
@@ -548,6 +548,8 @@ export default function Home() {
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Excel</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">VBA</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">JavaScript</span>
+          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">AWS</span>
+          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">LaTeX</span>
         </div>
       </div>
 
@@ -563,6 +565,8 @@ export default function Home() {
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">APIs</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Power BI</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Tableau</span>
+          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Intellij</span>
+          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Boto3</span>
         </div>
       </div>
 
@@ -575,9 +579,9 @@ export default function Home() {
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Pandas</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">NumPy</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Scikit-learn</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Data Visualization</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Financial Modeling</span>
           <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">KPI Reporting</span>
+          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Forecasting</span>
         </div>
       </div>
 
@@ -629,48 +633,57 @@ export default function Home() {
 
 </div>
 {/* NOW your container starts */}
-  <div className="max-w-5xl mx-auto">
-    
-    <div className="grid grid-cols-2 md:grid-cols-4 gap-10 text-center">
+<div className="max-w-6xl mx-auto">
 
-      {/* INTERNSHIPS */}
-      <div className="group p-8 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-        <Briefcase className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={28} />
-        <p className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-          <CountUp end={3} duration={3} delay={0} />+
-        </p>
-        <p className="text-gray-500 text-sm mt-1">Internships</p>
-      </div>
+  <div className="grid grid-cols-5 gap-4 text-center">
 
-      {/* IMPACT */}
-      <div className="group p-8 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-        <Users className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={28} />
-        <p className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-          <CountUp end={20000} duration={3} delay={0.2} separator="," />+
-        </p>
-        <p className="text-gray-500 text-sm mt-1">Residents Impacted</p>
-      </div>
-
-      {/* EFFICIENCY */}
-      <div className="group p-8 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-        <TrendingUp className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={28} />
-        <p className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-          <CountUp end={75} duration={3} delay={0.4} />%
-        </p>
-        <p className="text-gray-500 text-sm mt-1">Cumulative Efficiency Improvement</p>
-      </div>
-
-      {/* PROJECTS */}
-      <div className="group p-8 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-        <Code className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={28} />
-        <p className="text-3xl md:text-4xl font-bold text-white tracking-tight">
-          <CountUp end={4} duration={3} delay={0.6} />+
-        </p>
-        <p className="text-gray-500 text-sm mt-1">Technical Projects</p>
-      </div>
-
+    {/* INTERNSHIPS */}
+    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
+      <Briefcase className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
+      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+        <CountUp end={3} duration={3} delay={0} />+
+      </p>
+      <p className="text-gray-500 text-xs mt-1">Internships</p>
     </div>
-  
+
+    {/* IMPACT */}
+    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
+      <Users className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
+      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+        <CountUp end={20000} duration={3} delay={0.2} separator="," />+
+      </p>
+      <p className="text-gray-500 text-xs mt-1">Residents Impacted</p>
+    </div>
+
+    {/* EFFICIENCY */}
+    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
+      <TrendingUp className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
+      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+        <CountUp end={75} duration={3} delay={0.4} />%
+      </p>
+      <p className="text-gray-500 text-xs mt-1">Cumulative Efficiency Improvement</p>
+    </div>
+
+    {/* PROJECTS */}
+    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
+      <Code className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
+      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+        <CountUp end={6} duration={3} delay={0.6} />+
+      </p>
+      <p className="text-gray-500 text-xs mt-1">Technical Projects</p>
+    </div>
+
+    {/* BUDGET MANAGED */}
+    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
+      <DollarSign className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
+      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
+        <CountUp prefix="$" end={40000} duration={3} delay={0.8} separator="," />+
+      </p>
+      <p className="text-gray-500 text-xs mt-1">Budget Managed</p>
+    </div>
+
+  </div>
+    
   </div>
 </motion.section>
 {/* SCROLLING PROOF TICKER */}
