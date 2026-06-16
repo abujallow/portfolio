@@ -441,7 +441,6 @@ I’m a student at Canisius University studying Finance and Data Science, with a
           <p className="text-gray-400 text-sm mb-4">Summer 2026</p>
 
           <ul className="text-gray-400 space-y-2 list-disc list-inside">
-            <li>M&T Bank- Default Servicing and Single Point of Contact (SPOC)</li>
             <li>Developing compliance reporting systems across 16 monthly workbooks</li>
             <li>Automating dashboards tracking quality, productivity, and servicing metrics</li>
             <li>Standardizing reporting workflows supporting a $10B+ loan servicing portfolio</li>
