@@ -393,10 +393,10 @@ export default function Home() {
     {/* RIGHT */}
     <div>
       <p className="text-gray-400 leading-relaxed mb-6">
-I’m a Junior at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets, operations, and risk management. My passion lies at the intersection of analytics, backend systems, operational and risk-based decision-making, and navigating uncertainty through data-driven insights.      </p>
+I’m a student at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets, operations, and risk management. My passion lies at the intersection of analytics, backend systems, operational and risk-based decision-making, and navigating uncertainty through data-driven insights.      </p>
 
       <p className="text-gray-400 leading-relaxed">
-        Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA), a position I have held for three years, and Executive Vice President of Alpha Kappa Psi, Delta Tau Chapter, while also working as a Resident Assistant and Teaching Assistant for both Microeconomics and Macroeconomics.
+        Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA), a position I have held for three years, and Executive Vice President of Alpha Kappa Psi, Delta Tau Chapter, while also working as a Resident Assistant and Teaching Assistant for both Macroeconomics and Microeconomics.
 
         <br /><br />
 
@@ -442,7 +442,9 @@ I’m a Junior at Canisius University studying Finance and Data Science, with a 
 
           <ul className="text-gray-400 space-y-2 list-disc list-inside">
             <li>M&T Bank- Default Servicing and Single Point of Contact (SPOC)</li>
-            <li>Focus on financial analysis, client engagement, and data-driven decision-making</li>
+            <li>Developing compliance reporting systems across 16 monthly workbooks</li>
+            <li>Automating dashboards tracking quality, productivity, and servicing metrics</li>
+            <li>Standardizing reporting workflows supporting a $10B+ loan servicing portfolio</li>
           </ul>
         </div>
       </div>
