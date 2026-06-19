@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "preview": "powershell -ExecutionPolicy Bypass -File ./preview-enhanced.ps1",
+    "rebuild": "next build"
   },
   "dependencies": {
     "@emailjs/browser": "^4.4.1",

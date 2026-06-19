@@ -1,873 +1,471 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
 import emailjs from "@emailjs/browser";
+import CountUp from "react-countup";
 import { motion } from "framer-motion";
 import { TypeAnimation } from "react-type-animation";
-import { Users, Briefcase, TrendingUp, Code } from "lucide-react";
-import CountUp from "react-countup";
-import { Shield, LineChart, Brain, Gauge, GitBranch, Target } from "lucide-react";
-import { DollarSign } from "lucide-react";
+import {
+  ArrowUpRight,
+  BadgeCheck,
+  Brain,
+  Briefcase,
+  Code,
+  DollarSign,
+  Gauge,
+  Github,
+  GitBranch,
+  Linkedin,
+  LineChart,
+  Mail,
+  Shield,
+  Target,
+  TrendingUp,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
+import SiteNav from "./components/SiteNav";
+import {
+  experiences,
+  focusTags,
+  philosophy,
+  projects,
+  proofHighlights,
+  proofMetrics,
+  skillGroups,
+} from "./data";
+
+const focusIcons = [Shield, LineChart, Brain, Gauge, GitBranch, Target];
+const metricIcons = [Briefcase, Users, TrendingUp, Code, DollarSign];
+
+const accentStyles = {
+  green: {
+    border: "hover:border-green-400/35",
+    text: "group-hover:text-green-300",
+    shadow: "group-hover:shadow-[0_0_28px_rgba(74,222,128,0.22)]",
+  },
+  blue: {
+    border: "hover:border-blue-400/35",
+    text: "group-hover:text-blue-300",
+    shadow: "group-hover:shadow-[0_0_28px_rgba(96,165,250,0.22)]",
+  },
+  red: {
+    border: "hover:border-red-400/35",
+    text: "group-hover:text-red-300",
+    shadow: "group-hover:shadow-[0_0_28px_rgba(248,113,113,0.2)]",
+  },
+  slate: {
+    border: "hover:border-slate-300/25",
+    text: "group-hover:text-slate-200",
+    shadow: "group-hover:shadow-[0_0_28px_rgba(148,163,184,0.16)]",
+  },
+};
 
 export default function Home() {
+  const [formStatus, setFormStatus] = useState({ type: "idle", message: "" });
+  const [isSending, setIsSending] = useState(false);
 
-  const [projectIndex, setProjectIndex] = useState(0);
+  const sendEmail = async (event) => {
+    event.preventDefault();
+    setIsSending(true);
+    setFormStatus({ type: "idle", message: "" });
 
-  const projects = [
-    {
-      title: "Credit Risk Mini-Model",
-      image: "/credit-risk.png",
-      featured: true,
-      tags: ["Python", "FastAPI", "Machine Learning"],
-      description: "Developed a logistic regression model to predict credit risk and deployed it with FastAPI to serve real-time predictions and support decision-making.",
-      github: "https://github.com/abujallow/credit-risk-mini",
-    },
-    {
-      title: "Risk Monitoring System",
-      image: "/risk-monitoring.png",
-      featured: false,
-      tags: ["Python", "Data Analysis"],
-      description: "Built a volatility monitoring system that tracks market conditions and triggers alerts based on predefined risk thresholds.",
-      github: "https://github.com/abujallow/risk-monitoring-system",
-    },
-    {
-      title: "Market Dashboard",
-      image: "/market-dashboard.png",
-      featured: false,
-      tags: ["Python", "Flask", "Data Visualization"],
-      description: "Built an interactive financial dashboard using Plotly and yFinance to visualize market trends and support data-driven investment insights.",
-      github: "https://github.com/abujallow/market-dashboard",
-    },
-    {
-      title: "Banking Logging System",
-      image: "/banking-logging.png",
-      featured: false,
-      tags: ["Java", "Logging", "File Handling"],
-      description: "Designed a Java-based application implementing structured logging, file handling, and configurable logging levels for transaction and system monitoring.",
-      github: "https://github.com/abujallow/banking-logging-java",
-    },
-    {
-      title: "Java Data Analyzer",
-      image: "/java-data-analyzer.png",
-      featured: false,
-      tags: ["Java", "JavaFX", "Statistics"],
-      description: "Built a JavaFX desktop application that processes numeric text files, calculates statistical metrics, and exports results using efficient file handling and backend logic.",
-      github: "https://github.com/abujallow/java-data-analyzer",
-    },
-    {
-      title: "Probability Simulation Engine",
-      image: "/probability-simulation.png",
-      featured: false,
-      tags: ["Java", "Simulation", "Probability"],
-      description: "Built a Java application that simulates randomized card hands, tracks unique combinations, measures coverage progress, and exports probability results for analysis.",
-      github: "https://github.com/abujallow/probability-simulation-engine",
-    },
-  ];
-
-  const fullText =
-    "Think in systems. Act with precision. Build with intent. Deliver with impact.";
-
-  const [displayText, setDisplayText] = useState("");
-
-  useEffect(() => {
-    let i = 0;
-
-    const interval = setInterval(() => {
-      setDisplayText(fullText.slice(0, i));
-      i++;
-
-      if (i > fullText.length) {
-        clearInterval(interval);
-      }
-    }, 75);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  const sendEmail = (e) => {
-    e.preventDefault();
-
-    emailjs.sendForm(
-      "service_rdf1y8z",
-      "template_2em9bla",
-      e.target,
-      "x3uO77Ckyycga9JaE"
-    )
-    .then(() => {
-      alert("Message sent successfully!");
-    }, (error) => {
-      alert("Failed to send message, try again.");
-      console.log(error);
-    });
-
-    e.target.reset();
+    try {
+      await emailjs.sendForm(
+        "service_rdf1y8z",
+        "template_2em9bla",
+        event.currentTarget,
+        "x3uO77Ckyycga9JaE"
+      );
+      event.currentTarget.reset();
+      setFormStatus({
+        type: "success",
+        message: "Thanks. Your message was sent successfully.",
+      });
+    } catch {
+      setFormStatus({
+        type: "error",
+        message: "Something went wrong. Please try again or reach out on LinkedIn.",
+      });
+    } finally {
+      setIsSending(false);
+    }
   };
 
   return (
-    <main className="bg-black text-white min-h-screen">
-      {/* NAVBAR */}
-{/* NAVBAR */}
-<nav className="flex justify-between items-center px-8 py-6 border-b border-gray-800 bg-black text-white">
-  <div className="flex items-center gap-8 flex-1">
-  <h1 className="text-xl font-bold whitespace-nowrap">AJ.</h1>
+    <main id="top" className="min-h-screen bg-black text-white">
+      <SiteNav active="home" />
 
-  <p className="text-lg tracking-wider text-gray-300 hidden md:block mx-auto whitespace-nowrap">
-  {displayText}
-  <span className="animate-pulse">|</span>
-</p>
-</div>
-  <div className="flex gap-6 text-gray-300">
-    
-    <button
-      onClick={() => {
-        window.scrollTo({
-          top: 0,
-          behavior: "smooth",
-        });
-      }}
-      className="hover:text-white"
-    >
-      Home
-    </button>
+      <section className="section-shell grid gap-12 py-18 md:grid-cols-[1.05fr_0.95fr] md:items-center md:py-24">
+        <motion.div
+          initial={{ opacity: 0, y: 28 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+        >
+          <p className="eyebrow mb-4">Finance / Data Science / Risk & Operations</p>
+          <h1 className="max-w-3xl text-5xl font-bold tracking-tight text-white md:text-7xl">
+            Abubakr Jallow
+          </h1>
 
-    <button
-      onClick={() => {
-        document.getElementById("about").scrollIntoView({
-          behavior: "smooth",
-        });
-      }}
-      className="hover:text-white"
-    >
-      About
-    </button>
-
-    <button
-      onClick={() => {
-        document.getElementById("experience").scrollIntoView({
-          behavior: "smooth",
-        });
-      }}
-      className="hover:text-white"
-    >
-      Experience
-    </button>
-
-    <button
-      onClick={() => {
-        document.getElementById("projects").scrollIntoView({
-          behavior: "smooth",
-        });
-      }}
-      className="hover:text-white"
-    >
-      Projects
-    </button>
-
-    <button
-      onClick={() => {
-        document.getElementById("contact").scrollIntoView({
-          behavior: "smooth",
-        });
-      }}
-      className="hover:text-white"
-    >
-      Contact
-    </button>
-    <a
-  href="/blog"
-  className="flex items-center hover:text-white"
->
-  Blog
-</a>
-    {/* ✅ ONLY ADD THIS PART */}
-    <a
-      href="/resume.pdf"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="border border-white px-4 py-2 rounded-lg text-sm font-medium transition duration-300 hover:bg-white hover:text-black"
-    >
-      Resume
-    </a>
-
-  </div>
-</nav>
-      {/* HERO SECTION */}
-<div className="flex items-center justify-center px-6 py-20">
-  <div className="max-w-6xl w-full grid md:grid-cols-2 gap-12 items-center">
-
-    {/* LEFT SIDE */}
-    <motion.div
-      initial={{ opacity: 0, y: 40 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.8 }}
-    >
-      <motion.div
-  className="relative inline-block mb-6"
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.2 }}
->
-  {/* Glow */}
-  <div className="absolute inset-0 bg-gradient-to-r from-white via-blue-200 to-white blur-2xl opacity-18 rounded-full"></div>
-
-  {/* Name */}
-  <h1 className="relative text-5xl md:text-6xl font-bold">
-    Abubakr Jallow
-  </h1>
-</motion.div>
-
-      <motion.div
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  transition={{ delay: 0.5, duration: 0.8 }}
->
-  <TypeAnimation 
-  sequence={[
-    "Finance",
-    1200,
-    "Data Science",
-    1200,
-    "Risk & Operations",
-    1200,
-    "Finance • Data Science • Risk & Operations",
-    2500, // pause longer on full identity
-  ]}
-  wrapper="h2"
-  speed={50}
-  repeat={Infinity} // ✅ loop forever
-  className="text-xl md:text-2xl text-gray-400 mb-6"
-/>
-</motion.div>
-      <motion.p
-        className="text-gray-300 text-lg leading-relaxed mb-8"
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6 }}
-      >
-        I build data-driven systems for financial decision-making under uncertainty, combining analytics, risk modeling, and real-world impact.
-      </motion.p>
-
-      <motion.div
-  className="flex items-center gap-4 flex-wrap"
-  initial={{ opacity: 0 }}
-  animate={{ opacity: 1 }}
-  transition={{ delay: 0.8 }}
->
-
-  {/* BUTTON GROUP */}
-  <div className="flex gap-4">
-    <a href="#projects">
-      <button className="bg-white text-black px-6 py-3 rounded-lg font-medium transition duration-300 hover:scale-105 hover:shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-        View Projects
-      </button>
-    </a>
-
-    <a href="#contact">
-      <button className="border border-white px-6 py-3 rounded-lg font-medium transition duration-300 hover:bg-white hover:text-black hover:scale-105">
-        Contact
-      </button>
-    </a>
-  </div>
-
-  {/* ICON GROUP */}
-  <div className="flex items-center gap-3 ml-6">
-
-    {/* LINKEDIN */}
-    <a
-      href="https://www.linkedin.com/in/abubakr1/"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 border border-white/20 rounded-lg transition duration-300 hover:bg-white hover:text-black hover:scale-105"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M4.98 3.5C4.98 4.88 3.86 6 2.5 6S0 4.88 0 3.5 1.12 1 2.5 1s2.48 1.12 2.48 2.5zM.5 8h4V24h-4V8zm7.5 0h3.6v2.2h.05c.5-.95 1.75-2.2 3.6-2.2 3.85 0 4.55 2.55 4.55 5.85V24h-4v-7.7c0-1.85-.03-4.25-2.6-4.25-2.6 0-3 2.03-3 4.1V24h-4V8z"/>
-      </svg>
-    </a>
-
-    {/* GITHUB */}
-    <a
-      href="https://github.com/abujallow"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="p-3 border border-white/20 rounded-lg transition duration-300 hover:bg-white hover:text-black hover:scale-105"
-    >
-      <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-        <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.1 3.29 9.43 7.86 10.96.57.1.78-.25.78-.55v-2.02c-3.2.7-3.88-1.54-3.88-1.54-.53-1.35-1.3-1.7-1.3-1.7-1.06-.73.08-.72.08-.72 1.18.08 1.8 1.21 1.8 1.21 1.04 1.78 2.74 1.27 3.41.97.1-.76.4-1.27.73-1.56-2.55-.29-5.23-1.28-5.23-5.68 0-1.25.45-2.27 1.2-3.07-.12-.3-.52-1.52.12-3.17 0 0 .98-.31 3.2 1.17a11.1 11.1 0 012.92-.39c.99 0 2 .13 2.92.39 2.22-1.48 3.2-1.17 3.2-1.17.64 1.65.24 2.87.12 3.17.75.8 1.2 1.82 1.2 3.07 0 4.41-2.69 5.38-5.25 5.67.41.35.78 1.04.78 2.1v3.11c0 .3.21.66.79.55C20.71 21.43 24 17.1 24 12 24 5.65 18.35.5 12 .5z"/>
-      </svg>
-    </a>
-
-  </div>
-
-</motion.div>
-    </motion.div>
-
-    {/* RIGHT SIDE */}
-    <motion.div
-      className="flex justify-center"
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.8, delay: 0.4 }}
-    >
-      <img
-        src="/Canisius_Headshots-155.jpg"
-        alt="Profile"
-        className="rounded-2xl w-80 object-cover shadow-[0_0_40px_rgba(255,255,255,0.1)]"
-      />
-    </motion.div>
-
-  </div>
-</div>
-
-      {/* ABOUT SECTION */}
-<motion.section
-  id="about"
-  className="px-8 py-24 border-t border-gray-800"
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
->
-
-  <h2 className="text-3xl md:text-4xl font-bold mb-12 text-center tracking-tight">
-    Philosophy & Background
-  </h2>
-
-  <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16">
-    
-    {/* LEFT */}
-<div className="relative">
-
-  {/* GLOW ORB */}
-  <div className="absolute -top-10 -left-10 w-40 h-40 bg-blue-500/10 blur-3xl rounded-full pointer-events-none"></div>
-
-  <p className="text-green-400 text-xs tracking-widest uppercase mb-4">
-    My Leading Philosophy
-  </p>
-
-  <motion.p
-    initial={{ opacity: 0, y: 40 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    transition={{ delay: 0.3, duration: 1 }}
-    viewport={{ once: true }}
-    className="text-2xl md:text-3xl italic text-gray-200 leading-relaxed"
-  >
-    "I approach finance and data through risk and uncertainty, building adaptive systems and leading to serve others through decisions that create long-term impact."
-  </motion.p>
-  {/* FOCUS TAGS */}
-<div className="flex flex-wrap justify-center gap-3 mt-6 max-w-md">
-
-  {/* ROW 1 */}
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <Shield size={14} />
-    Risk Modeling
-  </span>
-
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <LineChart size={14} />
-    Financial Systems
-  </span>
-
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <Brain size={14} />
-    Data-Driven Decisions
-  </span>
-
-  {/* ROW 2 */}
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <Gauge size={14} />
-    Efficiency
-  </span>
-
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <GitBranch size={14} />
-    Systems Thinking
-  </span>
-
-  <span className="flex items-center gap-2 text-xs px-3 py-1 border border-white/20 rounded-full text-gray-400 hover:text-white hover:border-white transition duration-300 hover:scale-111">
-    <Target size={14} />
-    Decision Making
-  </span>
-
-</div>
-</div>
-    {/* RIGHT */}
-    <div>
-      <p className="text-gray-400 leading-relaxed mb-6">
-I’m a student at Canisius University studying Finance and Data Science, with a focus on building practical, data-driven systems within financial markets, operations, and risk management. My passion lies at the intersection of analytics, backend systems, operational and risk-based decision-making, and navigating uncertainty through data-driven insights.      </p>
-
-      <p className="text-gray-400 leading-relaxed">
-        Beyond technical work, I’m deeply engaged in campus life, where I’ve developed a strong foundation in servant leadership. I currently serve as President of the Residence Hall Association (RHA), a position I have held for three years, and Executive Vice President of Alpha Kappa Psi, Delta Tau Chapter, while also working as a Resident Assistant and Teaching Assistant for both Macroeconomics and Microeconomics.
-
-        <br /><br />
-
-        Through these roles, I focus on empowering others, building strong communities, and creating environments where people can grow. My involvement reflects a broader commitment to leading with purpose, serving others while driving meaningful, lasting impact.
-      </p>
-    </div>
-
-  </div>
-
-        </motion.section>
-       {/* EXPERIENCE SECTION */}
-<motion.section
-  id="experience"
-  className="px-8 py-24 border-t border-gray-800"
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
->
-  <div className="max-w-6xl mx-auto">
-
-    <h2 className="text-3xl font-bold mb-12 text-center">
-      Experience
-    </h2>
-
-    <div className="space-y-10">
-
-      {/* M&T */}
-      <div className="group grid grid-cols-[160px_1fr] gap-10 items-start p-6 rounded-xl transition duration-300 hover:bg-gray-900 hover:scale-[1.01] border border-transparent hover:border-green-500/30">
-        <div className="w-40 h-40 bg-gray-900 rounded-lg flex items-center justify-center transition duration-300 group-hover:shadow-[0_0_25px_rgba(34,197,94,0.4)]">
-          <img 
-            src="/mt.png" 
-            alt="M&T Bank"
-            className="max-w-[70%] max-h-[70%] object-contain"
+          <TypeAnimation
+            sequence={[
+              "Building financial systems with practical data science.",
+              1800,
+              "Turning uncertainty into measurable decision support.",
+              1800,
+              philosophy,
+              2600,
+            ]}
+            wrapper="p"
+            speed={52}
+            repeat={Infinity}
+            className="mt-6 min-h-16 max-w-2xl text-xl leading-relaxed text-slate-300 md:text-2xl"
           />
-        </div>
 
-        <div className="max-w-2xl">
-          <h3 className="text-xl font-semibold transition duration-300 group-hover:text-green-400">
-            M&T Bank — SPOC Summer Analyst
-          </h3>
-          <p className="text-gray-400 text-sm mb-4">Summer 2026</p>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-400">
+            I build data-driven systems for financial decision-making under uncertainty, combining
+            analytics, risk modeling, and real-world operational impact.
+          </p>
 
-          <ul className="text-gray-400 space-y-2 list-disc list-inside">
-            <li>Developing compliance reporting systems across 16 monthly workbooks</li>
-            <li>Automating dashboards tracking quality, productivity, and servicing metrics</li>
-            <li>Standardizing reporting workflows supporting a $10B+ loan servicing portfolio</li>
-          </ul>
-        </div>
-      </div>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <Link
+              href="#projects"
+              className="rounded-md bg-white px-5 py-3 font-semibold text-black transition hover:-translate-y-0.5 hover:bg-slate-200"
+            >
+              View Projects
+            </Link>
+            <Link
+              href="#contact"
+              className="rounded-md border border-white/70 px-5 py-3 font-semibold text-white transition hover:-translate-y-0.5 hover:bg-white hover:text-black"
+            >
+              Contact
+            </Link>
+            <a
+              href="https://www.linkedin.com/in/abubakr1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Abubakr Jallow on LinkedIn"
+              className="rounded-md border border-white/15 p-3 text-slate-200 transition hover:-translate-y-0.5 hover:bg-white hover:text-black"
+            >
+              <Linkedin size={20} />
+            </a>
+            <a
+              href="https://github.com/abujallow"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="Open Abubakr Jallow on GitHub"
+              className="rounded-md border border-white/15 p-3 text-slate-200 transition hover:-translate-y-0.5 hover:bg-white hover:text-black"
+            >
+              <Github size={20} />
+            </a>
+          </div>
+        </motion.div>
 
-      {/* BUFFALO */}
-      <div className="group grid grid-cols-[160px_1fr] gap-10 items-start p-6 rounded-xl transition duration-300 hover:bg-gray-900 hover:scale-[1.01] border border-transparent hover:border-blue-500/30">
-        <div className="w-40 h-40 bg-gray-900 rounded-lg flex items-center justify-center transition duration-300 group-hover:shadow-[0_0_25px_rgba(59,130,246,0.4)]">
-          <img 
-            src="/buffalo.png" 
-            alt="City of Buffalo"
-            className="max-w-[70%] max-h-[70%] object-contain"
+        <motion.div
+          initial={{ opacity: 0, scale: 0.96 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.7, delay: 0.15 }}
+          className="relative mx-auto w-full max-w-md"
+        >
+          <div className="absolute -inset-4 rounded-3xl border border-white/10 bg-white/[0.03]" />
+          <Image
+            src="/Canisius_Headshots-155.jpg"
+            alt="Portrait of Abubakr Jallow"
+            width={720}
+            height={900}
+            priority
+            sizes="(max-width: 768px) 90vw, 420px"
+            className="relative aspect-[4/5] w-full rounded-2xl object-cover shadow-2xl"
           />
-        </div>
+          <div className="relative mt-4 rounded-lg border border-white/10 bg-white/[0.04] p-4 text-sm text-slate-300">
+            <span className="font-semibold text-white">Junior-year focus:</span> finance, data
+            science, risk, operations, and measurable service.
+          </div>
+        </motion.div>
+      </section>
 
-        <div className="max-w-2xl">
-          <h3 className="text-xl font-semibold transition duration-300 group-hover:text-blue-400">
-            City of Buffalo — Risk Management Intern
-          </h3>
-          <p className="text-gray-400 text-sm mb-4">Summer 2025</p>
-
-          <ul className="text-gray-400 space-y-2 list-disc list-inside">
-            <li>Developed operational frameworks serving 20,000+ residents</li>
-            <li>Reduced service processing time from 12 days to 2 days</li>
-            <li>Built regression models using census data to analyze community trends</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* BOFA */}
-      <div className="group grid grid-cols-[160px_1fr] gap-10 items-start p-6 rounded-xl transition duration-300 hover:bg-gray-900 hover:scale-[1.01] border border-transparent hover:border-red-500/30">
-        <div className="w-40 h-40 bg-gray-900 rounded-lg flex items-center justify-center transition duration-300 group-hover:shadow-[0_0_25px_rgba(239,68,68,0.4)]">
-          <img 
-            src="/bofa.png" 
-            alt="Bank of America"
-            className="max-w-[70%] max-h-[70%] object-contain"
-          />
-        </div>
-
-        <div className="max-w-2xl">
-          <h3 className="text-xl font-semibold transition duration-300 group-hover:text-red-400">
-            Bank of America — Student Leader Intern
-          </h3>
-          <p className="text-gray-400 text-sm mb-4">Summer 2024</p>
-
-          <ul className="text-gray-400 space-y-2 list-disc list-inside">
-            <li>Built VBA-based tracking systems contributing to 98% retention rate</li>
-            <li>Conducted 13 interviews to assess operational risk and improve reporting</li>
-            <li>Supported leadership programming for 70+ participants</li>
-          </ul>
-        </div>
-      </div>
-
-      {/* NORTHLAND */}
-<div className="group grid grid-cols-[160px_1fr] gap-10 items-start p-6 rounded-xl transition duration-300 hover:bg-gray-900 hover:scale-[1.01] border border-transparent hover:border-gray-400/20">
-  <div className="w-40 h-40 bg-gray-900 rounded-lg flex items-center justify-center transition duration-300 group-hover:shadow-[0_0_25px_rgba(148,163,184,0.3)]">
-    <img 
-      src="/northland.png" 
-      alt="Northland Workforce Training Center"
-      className="max-w-[70%] max-h-[70%] object-contain"
-    />
-  </div>
-  <div className="max-w-2xl">
-    <h3 className="text-xl font-semibold transition duration-300 group-hover:text-gray-300">
-      Northland Workforce Training Center — Operations & Automation Intern
-    </h3>
-    <p className="text-gray-400 text-sm mb-4">Summer 2023</p>
-    <ul className="text-gray-400 space-y-2 list-disc list-inside">
-      <li>Automated workflows reducing manual entry by 40% across 250+ fleet database</li>
-      <li>Cut processing time from 6 days to 4 days through validation systems</li>
-      <li>Improved data accuracy to 95%+ through cross-team collaboration</li>
-    </ul>
-  </div>
-</div>
-</div>
-</div>
-</motion.section>
-{/* SKILLS SECTION */}
-<motion.section
-  id="skills"
-  className="px-8 py-24 border-t border-gray-800"
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
->
-  <div className="max-w-6xl mx-auto">
-
-    <h2 className="text-3xl font-bold mb-12 text-center">
-      Skills
-    </h2>
-
-    <div className="grid md:grid-cols-3 gap-8">
-
-      {/* LANGUAGES */}
-      <div className="group p-6 rounded-xl bg-gray-900 border border-transparent hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition duration-300 hover:-translate-y-1">
-        <h3 className="text-lg font-semibold mb-4 text-center group-hover:text-white">
-          Languages
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-400">
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Python</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Java</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">SQL</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Excel</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">VBA</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">JavaScript</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">AWS</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">LaTeX</span>
-        </div>
-      </div>
-
-      {/* FRAMEWORKS & TOOLS */}
-      <div className="group p-6 rounded-xl bg-gray-900 border border-transparent hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition duration-300 hover:-translate-y-1">
-        <h3 className="text-lg font-semibold mb-4 text-center group-hover:text-white">
-          Frameworks & Tools
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-400">
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">FastAPI</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Flask</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Git</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">APIs</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Power BI</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Tableau</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Intellij</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Boto3</span>
-        </div>
-      </div>
-
-      {/* DATA & ANALYSIS */}
-      <div className="group p-6 rounded-xl bg-gray-900 border border-transparent hover:border-white/20 hover:shadow-[0_0_30px_rgba(255,255,255,0.15)] transition duration-300 hover:-translate-y-1">
-        <h3 className="text-lg font-semibold mb-4 text-center group-hover:text-white">
-          Data & Analysis
-        </h3>
-        <div className="flex flex-wrap justify-center gap-2 text-sm text-gray-400">
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Pandas</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">NumPy</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Scikit-learn</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Financial Modeling</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">KPI Reporting</span>
-          <span className="border border-white/20 px-2 py-1 rounded hover:bg-white hover:text-black transition">Forecasting</span>
-        </div>
-      </div>
-
-    </div>
-
-  </div>
-</motion.section>
-{/* PROOF STRIP */}
-<motion.section
-  className="px-8 py-16 border-t border-gray-800"
-  initial={{ opacity: 0, y: 40 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.6 }}
-  viewport={{ once: true }}
-> {/* TOP TICKER ✅ FULL WIDTH */}
-<div className="relative overflow-hidden border-b border-gray-800 mb-12">
-
-  {/* LEFT FADE */}
-  <div className="pointer-events-none absolute left-0 top-0 h-full w-24 bg-gradient-to-r from-black to-transparent z-10" />
-
-  {/* RIGHT FADE */}
-  <div className="pointer-events-none absolute right-0 top-0 h-full w-24 bg-gradient-to-l from-black to-transparent z-10" />
-
-  <div
-    className="flex w-max"
-    style={{ animation: "scroll-reverse 30s linear infinite" }}
-    
-  >
-
-    <div className="flex gap-12 whitespace-nowrap text-gray-400 text-sm leading-none">
-      <span>Built regression models using census data</span>
-      <span>Reduced service processing time by 80%</span>
-      <span>Automated workflows across 250+ records</span>
-      <span>Led initiatives impacting 70+ participants</span>
-      <span>Developed real-time risk monitoring systems</span>
-      <span>Improved data accuracy to 95%+</span>
-    </div>
-
-    <div className="flex gap-12 whitespace-nowrap text-gray-400 text-sm leading-none ml-12">
-      <span>Built regression models using census data</span>
-      <span>Reduced service processing time by 80%</span>
-      <span>Automated workflows across 250+ records</span>
-      <span>Led initiatives impacting 70+ participants</span>
-      <span>Developed real-time risk monitoring systems</span>
-      <span>Improved data accuracy to 95%+</span>
-    </div>
-
-  </div>
-
-</div>
-{/* NOW your container starts */}
-<div className="max-w-6xl mx-auto">
-
-  <div className="grid grid-cols-5 gap-4 text-center">
-
-    {/* INTERNSHIPS */}
-    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-      <Briefcase className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
-      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        <CountUp end={3} duration={3} delay={0} />+
-      </p>
-      <p className="text-gray-500 text-xs mt-1">Internships</p>
-    </div>
-
-    {/* IMPACT */}
-    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-      <Users className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
-      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        <CountUp end={20000} duration={3} delay={0.2} separator="," />+
-      </p>
-      <p className="text-gray-500 text-xs mt-1">Residents Impacted</p>
-    </div>
-
-    {/* EFFICIENCY */}
-    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-      <TrendingUp className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
-      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        <CountUp end={75} duration={3} delay={0.4} />%
-      </p>
-      <p className="text-gray-500 text-xs mt-1">Cumulative Efficiency Improvement</p>
-    </div>
-
-    {/* PROJECTS */}
-    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-      <Code className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
-      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        <CountUp end={6} duration={3} delay={0.6} />+
-      </p>
-      <p className="text-gray-500 text-xs mt-1">Technical Projects</p>
-    </div>
-
-    {/* BUDGET MANAGED */}
-    <div className="group p-5 rounded-xl transition duration-300 hover:bg-gray-900 hover:shadow-[0_0_25px_rgba(255,255,255,0.12)]">
-      <DollarSign className="mx-auto mb-2 text-gray-400 group-hover:text-white" size={24} />
-      <p className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-        <CountUp prefix="$" end={40000} duration={3} delay={0.8} separator="," />+
-      </p>
-      <p className="text-gray-500 text-xs mt-1">Budget Managed</p>
-    </div>
-
-  </div>
-    
-  </div>
-</motion.section>
-{/* SCROLLING PROOF TICKER */}
-<div className="overflow-hidden mt-12 border-t border-gray-800 pt-6">
-
-  <div className="flex whitespace-nowrap animate-scroll gap-16 text-gray-400 text-sm w-max">
-
-    {/* ORIGINAL */}
-    <span>Built regression models using census data</span>
-    <span>Reduced service processing time by 80%</span>
-    <span>Automated workflows across 250+ records</span>
-    <span>Led initiatives impacting 70+ participants</span>
-    <span>Developed real-time risk monitoring systems</span>
-    <span>Improved data accuracy to 95%+</span>
-
-    {/* DUPLICATE (DO NOT REMOVE — THIS MAKES IT LOOP) */}
-    <span>Built regression models using census data</span>
-    <span>Reduced service processing time by 80%</span>
-    <span>Automated workflows across 250+ records</span>
-    <span>Led initiatives impacting 70+ participants</span>
-    <span>Developed real-time risk monitoring systems</span>
-    <span>Improved data accuracy to 95%+</span>
-
-  </div>
-
-</div>
-{/* PROJECTS SECTION */}
-<motion.section
-  id="projects"
-  className="px-8 py-24 border-t border-gray-800"
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
->
-  <div className="max-w-6xl mx-auto">
-
-    <h2 className="text-3xl font-bold mb-12 text-center">Projects</h2>
-
-    <div className="relative">
-
-      {/* LEFT ARROW */}
-      <button
-        onClick={() => setProjectIndex((prev) => Math.max(prev - 1, 0))}
-        disabled={false}
-        className="absolute -left-6 top-1/2 -translate-y-1/2 z-10 bg-gray-800 border border-white/20 rounded-full p-2 hover:bg-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-        </svg>
-      </button>
-
-      {/* RIGHT ARROW */}
-      <button
-        onClick={() => setProjectIndex((prev) => (prev + 1) % Math.ceil(projects.length / 3))}
-        disabled={false}
-        className="absolute -right-6 top-1/2 -translate-y-1/2 z-10 bg-gray-800 border border-white/20 rounded-full p-2 hover:bg-gray-700 disabled:opacity-20 disabled:cursor-not-allowed transition"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" className="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-        </svg>
-      </button>
-
-      {/* CARDS */}
-      <div className="grid md:grid-cols-3 gap-8">
-        {projects.slice(projectIndex * 3, projectIndex * 3 + 3).map((project) => (
-          <div
-            key={project.title}
-            className={`group bg-gray-900 rounded-xl overflow-hidden transition duration-300 hover:scale-105 border ${
-              project.featured
-                ? "border-white/20 shadow-[0_0_25px_rgba(255,255,255,0.12)] scale-[1.02]"
-                : "border-transparent hover:border-white/20 hover:shadow-[0_0_25px_rgba(255,255,255,0.15)]"
-            }`}
-          >
-            <div className="overflow-hidden">
-              <img
-                src={project.image}
-                alt={project.title}
-                className="w-full h-40 object-cover transition duration-500 group-hover:scale-110 group-hover:opacity-90"
-              />
-            </div>
-
-            <div className="p-6">
-              {project.featured && (
-                <span className="text-xs text-green-400 border border-green-400/30 px-2 py-1 rounded-full mb-3 inline-block">
-                  Featured
-                </span>
-              )}
-
-              <h3 className="text-xl font-semibold mb-2">{project.title}</h3>
-
-              <div className="flex flex-wrap gap-2 mb-3">
-                {project.tags.map((tag) => (
-                  <span key={tag} className="text-xs border border-white/20 px-2 py-1 rounded">{tag}</span>
-                ))}
-              </div>
-
-              <p className="text-gray-400 text-sm mb-4">{project.description}</p>
-
-<a                href={project.github}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-block text-white border border-white px-4 py-2 rounded-md text-sm hover:bg-white hover:text-black transition"
-              >
-                GitHub
-              </a>
+      <Section id="about" eyebrow="Background" title="Philosophy & Background">
+        <div className="grid gap-12 md:grid-cols-[0.95fr_1.05fr] md:items-start">
+          <div>
+            <blockquote className="text-2xl italic leading-relaxed text-slate-100 md:text-3xl">
+              &quot;I approach finance and data through risk and uncertainty, building adaptive
+              systems and leading to serve others through decisions that create long-term impact.&quot;
+            </blockquote>
+            <div className="mt-7 flex flex-wrap gap-2">
+              {focusTags.map((tag, index) => {
+                const Icon = focusIcons[index];
+                return (
+                  <span
+                    key={tag}
+                    className="inline-flex items-center gap-2 rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium text-slate-300 transition hover:border-white/40 hover:text-white"
+                  >
+                    <Icon size={14} />
+                    {tag}
+                  </span>
+                );
+              })}
             </div>
           </div>
-        ))}
+
+          <div className="space-y-5 text-base leading-8 text-slate-400">
+            <p>
+              I am a student at Canisius University studying Finance and Data Science, focused on
+              building practical, data-driven systems within financial markets, operations, and risk
+              management.
+            </p>
+            <p>
+              Beyond technical work, I am deeply engaged in campus life, where I have developed a
+              strong foundation in servant leadership. I currently serve as President of the
+              Residence Hall Association, Executive Vice President of Alpha Kappa Psi, Resident
+              Assistant, and Teaching Assistant for both Macroeconomics and Microeconomics.
+            </p>
+            <p>
+              Through these roles, I focus on empowering others, building strong communities, and
+              creating environments where people can grow.
+            </p>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="experience" eyebrow="Professional Proof" title="Experience">
+        <div className="space-y-5">
+          {experiences.map((experience) => {
+            const accent = accentStyles[experience.accent];
+            return (
+              <article
+                key={experience.company}
+                className={`group grid gap-6 rounded-lg border border-white/10 bg-white/[0.025] p-5 transition hover:-translate-y-0.5 hover:bg-white/[0.045] ${accent.border} md:grid-cols-[8rem_1fr] md:p-6`}
+              >
+                <div
+                  className={`flex h-28 w-28 items-center justify-center rounded-lg bg-white/[0.04] p-4 transition ${accent.shadow} md:h-32 md:w-32`}
+                >
+                  <Image
+                    src={experience.logo}
+                    alt={`${experience.company} logo`}
+                    width={128}
+                    height={128}
+                    className="max-h-full w-auto object-contain"
+                  />
+                </div>
+                <div>
+                  <div className="flex flex-wrap items-start justify-between gap-2">
+                    <h3 className={`text-xl font-semibold transition ${accent.text}`}>
+                      {experience.company} - {experience.role}
+                    </h3>
+                    <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
+                      {experience.date}
+                    </span>
+                  </div>
+                  <ul className="mt-4 grid gap-2 text-slate-400">
+                    {experience.bullets.map((bullet) => (
+                      <li key={bullet} className="flex gap-3">
+                        <BadgeCheck className="mt-1 shrink-0 text-green-300" size={16} />
+                        <span>{bullet}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </Section>
+
+      <Section id="skills" eyebrow="Capabilities" title="Skills">
+        <div className="grid gap-5 md:grid-cols-3">
+          {skillGroups.map((group) => (
+            <article key={group.title} className="rounded-lg border border-white/10 bg-white/[0.035] p-6">
+              <h3 className="text-lg font-semibold">{group.title}</h3>
+              <div className="mt-5 flex flex-wrap gap-2">
+                {group.items.map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-md border border-white/10 px-2.5 py-1.5 text-sm text-slate-300"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <section className="border-t border-white/10 py-14">
+        <div className="relative overflow-hidden border-y border-white/10 py-4">
+          <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-20 bg-gradient-to-r from-black to-transparent" />
+          <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-20 bg-gradient-to-l from-black to-transparent" />
+          <div className="animate-scroll flex w-max gap-12 text-sm text-slate-400">
+            {[...proofHighlights, ...proofHighlights].map((highlight, index) => (
+              <span key={`${highlight}-${index}`}>{highlight}</span>
+            ))}
+          </div>
+        </div>
+
+        <div className="section-shell mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+          {proofMetrics.map((metric, index) => {
+            const Icon = metricIcons[index];
+            const numeric = metric.value.replace(/[^0-9]/g, "");
+            return (
+              <article key={metric.label} className="rounded-lg border border-white/10 bg-white/[0.025] p-5">
+                <Icon className="mb-3 text-slate-400" size={22} />
+                <p className="text-3xl font-bold tracking-tight">
+                  {numeric ? (
+                    <>
+                      {metric.value.startsWith("$") && "$"}
+                      <CountUp end={Number(numeric)} duration={2.4} separator="," />
+                      {metric.value.endsWith("+") && "+"}
+                      {metric.value.endsWith("%") && "%"}
+                    </>
+                  ) : (
+                    metric.value
+                  )}
+                </p>
+                <p className="mt-1 text-sm font-medium text-slate-200">{metric.label}</p>
+                <p className="mt-2 text-xs leading-5 text-slate-500">{metric.detail}</p>
+              </article>
+            );
+          })}
+        </div>
+      </section>
+
+      <Section id="projects" eyebrow="Selected Work" title="Projects">
+        <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {projects.map((project) => (
+            <article
+              key={project.title}
+              className={`group flex h-full flex-col overflow-hidden rounded-lg border bg-white/[0.025] transition hover:-translate-y-1 hover:bg-white/[0.045] ${
+                project.featured ? "border-green-300/35" : "border-white/10 hover:border-white/25"
+              }`}
+            >
+              <div className="relative aspect-[16/9] overflow-hidden bg-slate-900">
+                <Image
+                  src={project.image}
+                  alt={`${project.title} screenshot`}
+                  fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
+                  className="object-cover transition duration-500 group-hover:scale-105"
+                />
+              </div>
+              <div className="flex flex-1 flex-col p-5">
+                <div className="mb-3 flex items-center justify-between gap-3">
+                  {project.featured && (
+                    <span className="rounded-full border border-green-300/30 px-2.5 py-1 text-xs font-medium text-green-300">
+                      Featured
+                    </span>
+                  )}
+                  <span className="text-xs text-slate-500">{project.tags[0]}</span>
+                </div>
+                <h3 className="text-xl font-semibold">{project.title}</h3>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  {project.tags.map((tag) => (
+                    <span key={tag} className="rounded-md border border-white/10 px-2 py-1 text-xs text-slate-300">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+                <p className="mt-4 text-sm leading-6 text-slate-400">{project.description}</p>
+                <p className="mt-3 text-sm leading-6 text-slate-300">
+                  <span className="font-semibold text-white">Why it matters:</span> {project.impact}
+                </p>
+                <a
+                  href={project.github}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-5 inline-flex w-fit items-center gap-2 rounded-md border border-white/40 px-4 py-2 text-sm font-medium transition hover:bg-white hover:text-black"
+                >
+                  GitHub <ArrowUpRight size={15} />
+                </a>
+              </div>
+            </article>
+          ))}
+        </div>
+      </Section>
+
+      <Section id="contact" eyebrow="Next Step" title="Contact">
+        <div className="mx-auto max-w-3xl">
+          <p className="mx-auto mb-9 max-w-2xl text-center leading-7 text-slate-400">
+            Open to internships and opportunities in finance, data science, risk, and operations
+            with a focus on practical, data-driven impact.
+          </p>
+          <form onSubmit={sendEmail} className="grid gap-5 rounded-lg border border-white/10 bg-white/[0.025] p-5 md:p-6">
+            <label className="grid gap-2 text-sm font-medium text-slate-200">
+              Name
+              <input
+                type="text"
+                name="name"
+                required
+                autoComplete="name"
+                className="rounded-md border border-white/10 bg-black px-3 py-3 text-white placeholder:text-slate-600"
+                placeholder="Your name"
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium text-slate-200">
+              Email
+              <input
+                type="email"
+                name="email"
+                required
+                autoComplete="email"
+                className="rounded-md border border-white/10 bg-black px-3 py-3 text-white placeholder:text-slate-600"
+                placeholder="you@example.com"
+              />
+            </label>
+            <label className="grid gap-2 text-sm font-medium text-slate-200">
+              Message
+              <textarea
+                name="message"
+                required
+                rows={5}
+                className="resize-y rounded-md border border-white/10 bg-black px-3 py-3 text-white placeholder:text-slate-600"
+                placeholder="Tell me what you are working on."
+              />
+            </label>
+            <div className="flex flex-wrap items-center justify-between gap-3">
+              <button
+                type="submit"
+                disabled={isSending}
+                className="inline-flex items-center gap-2 rounded-md bg-white px-5 py-3 font-semibold text-black transition hover:bg-slate-200 disabled:cursor-not-allowed disabled:opacity-60"
+              >
+                <Mail size={18} />
+                {isSending ? "Sending..." : "Send Message"}
+              </button>
+              {formStatus.message && (
+                <p
+                  role="status"
+                  className={`text-sm ${
+                    formStatus.type === "success" ? "text-green-300" : "text-red-300"
+                  }`}
+                >
+                  {formStatus.message}
+                </p>
+              )}
+            </div>
+          </form>
+        </div>
+      </Section>
+    </main>
+  );
+}
+
+function Section({ id, eyebrow, title, children }) {
+  return (
+    <motion.section
+      id={id}
+      className="border-t border-white/10 py-20 md:py-24"
+      initial={{ opacity: 0, y: 36 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.65 }}
+      viewport={{ once: true, margin: "-80px" }}
+    >
+      <div className="section-shell">
+        <div className="mb-10 text-center">
+          <p className="eyebrow mb-3">{eyebrow}</p>
+          <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{title}</h2>
+        </div>
+        {children}
       </div>
- 
-      {/* DOT INDICATORS */}
-      <div className="flex justify-center gap-2 mt-8">
-        {Array.from({ length: Math.ceil(projects.length / 3) }).map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setProjectIndex(i)}
-            className={`w-2 h-2 rounded-full transition ${
-              i === projectIndex ? "bg-white" : "bg-gray-600 hover:bg-gray-400"
-            }`}
-          />
-        ))}
-      </div>
-
-    </div>
-  </div>
-</motion.section>
-
-<motion.section
-  id="contact"
-  className="px-8 py-24 border-t border-gray-800"
-  initial={{ opacity: 0, y: 60 }}
-  whileInView={{ opacity: 1, y: 0 }}
-  transition={{ duration: 0.8 }}
-  viewport={{ once: true }}
->
-
-  <div className="max-w-3xl mx-auto text-center">
-
-    <h2 className="text-3xl font-bold mb-6">
-      Contact
-    </h2>
-
-    <p className="text-gray-400 mb-10">
-      Open to internships and opportunities in finance, data science, and risk & operations, with a focus on data-driven impact.
-    </p>
-
-    <form onSubmit={sendEmail} className="flex flex-col gap-6">
-
-      <input
-        type="text"
-        name="name"
-        placeholder="Your Name"
-        required
-        className="p-3 rounded bg-gray-900 border border-gray-700"
-      />
-
-      <input
-        type="email"
-        name="email"
-        placeholder="Your Email"
-        required
-        className="p-3 rounded bg-gray-900 border border-gray-700"
-      />
-
-      <textarea
-        name="message"
-        placeholder="Your Message"
-        required
-        rows={5}
-        className="p-3 rounded bg-gray-900 border border-gray-700"
-      />
-
-      <button
-        type="submit"
-        className="bg-white text-black px-6 py-3 rounded-lg font-medium hover:opacity-80"
-      >
-        Send Message
-      </button>
-
-    </form>
-    </div>
-  </motion.section>
-</main>
-);
+    </motion.section>
+  );
 }
