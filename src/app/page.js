@@ -237,7 +237,8 @@ export default function Home() {
               Beyond technical work, I am deeply engaged in campus life, where I have developed a
               strong foundation in servant leadership. I currently serve as President of the
               Residence Hall Association, Executive Vice President of Alpha Kappa Psi, Resident
-              Assistant, and Teaching Assistant for both Macroeconomics and Microeconomics.
+              Assistant, and Academic Tutor supporting quantitative, analytical, and writing-focused
+              coursework.
             </p>
           <p>
             Through these roles, I focus on empowering others, building strong communities, and
@@ -301,7 +302,7 @@ export default function Home() {
                   <p className="mt-1 text-sm font-medium text-green-300">{role.organization}</p>
                 </div>
                 <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
-                  Leadership
+                  {role.tag}
                 </span>
               </div>
               <p className="mt-4 leading-7 text-slate-400">{role.context}</p>

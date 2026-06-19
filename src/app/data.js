@@ -75,26 +75,38 @@ export const leadershipRoles = [
   {
     title: "President",
     organization: "Residence Hall Association",
-    context: "Three-year campus leadership role focused on resident advocacy, programming, and community building.",
-    proof: "Managed $40,000+ in budget responsibility while supporting initiatives across residential life.",
+    tag: "Strategy & Budget",
+    context:
+      "Direct Residence Hall Association operations through a three-year presidential tenure, overseeing annual budgets, campus programming, executive board coordination, and organizational strategy.",
+    proof:
+      "Leads event planning, vendor communication, funding allocation, and campus partner collaboration while managing a cumulative budget surpassing $50,000.",
   },
   {
     title: "Executive Vice President",
     organization: "Alpha Kappa Psi, Delta Tau Chapter",
-    context: "Supports chapter operations, professional development, and peer leadership within a business fraternity.",
-    proof: "Bridges finance, service, and professional growth through structured campus leadership.",
+    tag: "Chapter Operations",
+    context:
+      "Spearheads chapter operations and professional development initiatives by supporting member engagement, leadership development, and organizational planning.",
+    proof:
+      "Coordinates officer functions, aligns chapter priorities, and supports funding, budgeting, financial planning, and accountability across chapter leadership.",
   },
   {
     title: "Resident Assistant",
     organization: "Canisius University",
-    context: "Builds community, supports student wellbeing, and helps residents navigate academic and campus life.",
-    proof: "Strengthens communication, accountability, and service-oriented problem solving.",
+    tag: "Residential Life",
+    context:
+      "Supports residential operations by fostering a safe, inclusive, and accountable living environment for students.",
+    proof:
+      "Contributes to community development through conflict resolution, policy enforcement, event support, student mentorship, and residential engagement.",
   },
   {
-    title: "Teaching Assistant",
-    organization: "Macroeconomics & Microeconomics",
-    context: "Supports students learning core economic concepts, course material, and analytical reasoning.",
-    proof: "Reinforces technical communication and the ability to explain complex ideas clearly.",
+    title: "Academic Tutor",
+    organization: "Quantitative, Analytical & Writing Coursework",
+    tag: "Student Support",
+    context:
+      "Supports student learning across quantitative, analytical, and writing-focused coursework through individualized academic guidance.",
+    proof:
+      "Develops structured explanations and practice strategies that make complex material more accessible and support student academic growth.",
   },
 ];
 
@@ -118,7 +130,7 @@ export const proofMetrics = [
   { label: "Residents Impacted", value: "20,000+", detail: "Operational frameworks for public service" },
   { label: "Efficiency Improvement", value: "75%", detail: "Measured process and workflow gains" },
   { label: "Technical Projects", value: "6+", detail: "Finance, risk, data, and backend systems" },
-  { label: "Budget Managed", value: "$40,000+", detail: "Campus leadership and program execution" },
+  { label: "Budget Managed", value: "$50,000+", detail: "Cumulative campus leadership budget responsibility" },
 ];
 
 export const proofHighlights = [
