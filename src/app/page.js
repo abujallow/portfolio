@@ -29,6 +29,8 @@ import SiteNav from "./components/SiteNav";
 import {
   experiences,
   focusTags,
+  leadershipRoles,
+  opportunityAreas,
   philosophy,
   projects,
   proofHighlights,
@@ -128,6 +130,23 @@ export default function Home() {
             analytics, risk modeling, and real-world operational impact.
           </p>
 
+          <div className="mt-6 max-w-2xl rounded-lg border border-white/10 bg-white/[0.035] p-4">
+            <p className="text-sm leading-6 text-slate-300">
+              Exploring internship opportunities across finance, data analytics, risk, operations,
+              technology, financial services, and business analytics.
+            </p>
+            <div className="mt-3 flex flex-wrap gap-2">
+              {opportunityAreas.map((area) => (
+                <span
+                  key={area}
+                  className="rounded-full border border-white/10 px-2.5 py-1 text-xs font-medium text-slate-300"
+                >
+                  {area}
+                </span>
+              ))}
+            </div>
+          </div>
+
           <div className="mt-9 flex flex-wrap items-center gap-3">
             <Link
               href="#projects"
@@ -220,13 +239,13 @@ export default function Home() {
               Residence Hall Association, Executive Vice President of Alpha Kappa Psi, Resident
               Assistant, and Teaching Assistant for both Macroeconomics and Microeconomics.
             </p>
-            <p>
-              Through these roles, I focus on empowering others, building strong communities, and
-              creating environments where people can grow.
-            </p>
-          </div>
+          <p>
+            Through these roles, I focus on empowering others, building strong communities, and
+            creating environments where people can grow.
+          </p>
         </div>
-      </Section>
+      </div>
+    </Section>
 
       <Section id="experience" eyebrow="Professional Proof" title="Experience">
         <div className="space-y-5">
@@ -269,6 +288,28 @@ export default function Home() {
               </article>
             );
           })}
+        </div>
+      </Section>
+
+      <Section id="leadership" eyebrow="Campus Impact" title="Leadership">
+        <div className="grid gap-5 md:grid-cols-2">
+          {leadershipRoles.map((role) => (
+            <article key={`${role.title}-${role.organization}`} className="rounded-lg border border-white/10 bg-white/[0.025] p-6">
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div>
+                  <h3 className="text-xl font-semibold text-white">{role.title}</h3>
+                  <p className="mt-1 text-sm font-medium text-green-300">{role.organization}</p>
+                </div>
+                <span className="rounded-full border border-white/10 px-3 py-1 text-xs text-slate-400">
+                  Leadership
+                </span>
+              </div>
+              <p className="mt-4 leading-7 text-slate-400">{role.context}</p>
+              <p className="mt-4 text-sm leading-6 text-slate-300">
+                <span className="font-semibold text-white">Signal:</span> {role.proof}
+              </p>
+            </article>
+          ))}
         </div>
       </Section>
 
@@ -369,6 +410,14 @@ export default function Home() {
                 <p className="mt-3 text-sm leading-6 text-slate-300">
                   <span className="font-semibold text-white">Why it matters:</span> {project.impact}
                 </p>
+                <ul className="mt-4 grid gap-2 text-sm leading-6 text-slate-400">
+                  {project.proof.map((item) => (
+                    <li key={item} className="flex gap-2">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-green-300" />
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
                 <a
                   href={project.github}
                   target="_blank"
@@ -386,9 +435,20 @@ export default function Home() {
       <Section id="contact" eyebrow="Next Step" title="Contact">
         <div className="mx-auto max-w-3xl">
           <p className="mx-auto mb-9 max-w-2xl text-center leading-7 text-slate-400">
-            Open to internships and opportunities in finance, data science, risk, and operations
-            with a focus on practical, data-driven impact.
+            Open to internships and opportunities across finance, data analytics, risk,
+            operations, technology, financial services, and business analytics.
           </p>
+          <div className="mb-5 text-center">
+            <a
+              href="https://www.linkedin.com/in/abubakr1/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 rounded-md border border-white/20 px-4 py-2 text-sm font-medium text-slate-200 transition hover:bg-white hover:text-black"
+            >
+              <Linkedin size={16} />
+              Connect on LinkedIn
+            </a>
+          </div>
           <form onSubmit={sendEmail} className="grid gap-5 rounded-lg border border-white/10 bg-white/[0.025] p-5 md:p-6">
             <label className="grid gap-2 text-sm font-medium text-slate-200">
               Name

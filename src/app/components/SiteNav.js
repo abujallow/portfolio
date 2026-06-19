@@ -8,6 +8,7 @@ import { philosophy } from "../data";
 const navItems = [
   { label: "About", hash: "about" },
   { label: "Experience", hash: "experience" },
+  { label: "Leadership", hash: "leadership" },
   { label: "Projects", hash: "projects" },
   { label: "Contact", hash: "contact" },
 ];
@@ -37,9 +38,6 @@ export default function SiteNav({ active = "home" }) {
               {item.label}
             </Link>
           ))}
-          <Link href="/blog" className={active === "blog" ? "text-white" : "transition hover:text-white"}>
-            Blog
-          </Link>
           <a
             href="/resume.pdf"
             target="_blank"
@@ -77,9 +75,6 @@ export default function SiteNav({ active = "home" }) {
                 {item.label}
               </Link>
             ))}
-            <Link href="/blog" onClick={() => setOpen(false)} className="py-1">
-              Blog
-            </Link>
             <a
               href="/resume.pdf"
               target="_blank"

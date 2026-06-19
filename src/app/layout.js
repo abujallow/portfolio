@@ -3,11 +3,11 @@ import "./globals.css";
 export const metadata = {
   title: "Abubakr Jallow | Finance & Data Science Portfolio",
   description:
-    "Portfolio for Abubakr Jallow, a Finance and Data Science student building practical systems for risk, operations, and financial decision-making.",
+    "Portfolio for Abubakr Jallow, a Finance and Data Science student building practical systems across analytics, risk, operations, technology, and financial decision-making.",
   openGraph: {
     title: "Abubakr Jallow | Finance & Data Science Portfolio",
     description:
-      "Projects, experience, writing, and leadership at the intersection of finance, data science, risk, and operations.",
+      "Projects, experience, and leadership at the intersection of finance, data science, risk, operations, and technology.",
     type: "website",
   },
 };
